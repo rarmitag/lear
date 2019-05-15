@@ -81,8 +81,8 @@ if( !triggerBuild(CONTEXT_DIRECTORY) ) {
 }
 
 if( run_pipeline ) {
-
-
+    
+    
     // create NodeJS pod to run verification steps
     def nodejs_label = "jenkins-nodejs-${UUID.randomUUID().toString()}"
     podTemplate(label: nodejs_label, name: nodejs_label, serviceAccount: 'jenkins', cloud: 'openshift', containers: [
@@ -98,26 +98,18 @@ if( run_pipeline ) {
             args: '${computer.jnlpmac} ${computer.name}'
         )
     ])
-    {
-        node (nodejs_label) {
-            checkout scm
-            dir('coops-prototype') {               
-
-            }
-        }
-    }
-
-
+    
   node {
+    waitUntil {
+      stage("Build ${BUILD_CONFIG}") {
+        script {
+          openshift.withCluster() {
+            openshift.withProject() {
 
-    stage("Build ${BUILD_CONFIG}") {
-      script {
-        openshift.withCluster() {
-          openshift.withProject() {
-
-            echo "Building the application artifacts ..."
-            def build = openshift.selector("bc", "${BUILD_CONFIG}")
-            build.startBuild().logs("-f")
+              echo "Building the application artifacts ..."
+              def build = openshift.selector("bc", "${BUILD_CONFIG}")
+              build.startBuild().logs("-f")
+            }  
           }
         }
       }
