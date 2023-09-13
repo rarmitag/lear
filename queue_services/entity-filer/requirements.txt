@@ -11,7 +11,7 @@ certifi==2020.12.5
 click >= 8.1.0
 dpath==2.0.1
 itsdangerous==1.1.0
-jsonschema==4.16.0
+jsonschema >= 4.16.0
 protobuf==3.15.8
 pycountry==20.7.3
 pyrsistent==0.17.3
