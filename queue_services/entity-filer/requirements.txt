@@ -31,7 +31,7 @@ git+https://github.com/rarmitag/lear.git#egg=legal_api&subdirectory=legal-api
 git+https://github.com/rarmitag/lear.git#egg=sql-versioning&subdirectory=python/common/sql-versioning
 
 # fix due to conflicting versions from legal-api import
-protobuf==3.19.5
+protobuf>=3.19.4
 googleapis-common-protos==1.56.2
 grpcio-status==1.48.0
 grpc-google-iam-v1==0.12.4
